@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% set active_page = "saved" %}
+{% block title %}{{ memo.type_name }} Memo &mdash; MemoBoat{% endblock %}
+
+{% block content %}
+<main class="container my-5" style="max-width: 800px">
+  <a href="/saved" class="btn btn-outline-primary btn-sm mb-4">
+    <i class="bi bi-arrow-left me-1"></i> Back to Saved Memos
+  </a>
+
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <span>
+        <i class="bi bi-file-earmark-text me-1"></i>
+        <span class="badge bg-primary me-2">{{ memo.type_name }}</span>
+        {{ memo.timestamp }}
+      </span>
+      <button id="btnDownload" class="btn btn-sm btn-primary">
+        <i class="bi bi-download me-1"></i> Download .txt
+      </button>
+    </div>
+    <div class="card-body">
+      <!-- Summary -->
+      <h5 class="text-primary fw-bold mb-2"><i class="bi bi-card-text me-1"></i> Summary</h5>
+      <p id="memoSummary">{{ memo.summary }}</p>
+      <hr />
+
+      <!-- Action Items -->
+      <h5 class="text-primary fw-bold mb-2"><i class="bi bi-check2-square me-1"></i> Action Items</h5>
+      <ul class="list-unstyled" id="memoActions">
+        {% for item in memo.action_items | fromjson %}
+        <li class="form-check mb-2">
+          <input class="form-check-input" type="checkbox" id="ai{{ loop.index }}">
+          <label class="form-check-label" for="ai{{ loop.index }}">{{ item }}</label>
+        </li>
+        {% endfor %}
+      </ul>
+      <hr />
+
+      <!-- Key Decisions -->
+      <h5 class="text-primary fw-bold mb-2"><i class="bi bi-signpost-split me-1"></i> Key Decisions</h5>
+      <ul id="memoDecisions">
+        {% for dec in memo.key_decisions | fromjson %}
+        <li class="mb-1">{{ dec }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.getElementById("btnDownload").addEventListener("click", function () {
+    const summary = document.getElementById("memoSummary").textContent;
+    const actions = Array.from(document.querySelectorAll("#memoActions label"))
+      .map((l, i) => "  " + (i + 1) + ". " + l.textContent)
+      .join("\n");
+    const decisions = Array.from(document.querySelectorAll("#memoDecisions li"))
+      .map((l) => "  - " + l.textContent)
+      .join("\n");
+
+    const text =
+      "MEMOBOAT — Meeting Memo\n" +
+      "========================\n\n" +
+      "Meeting Type: {{ memo.type_name }}\n" +
+      "Date: {{ memo.timestamp }}\n\n" +
+      "SUMMARY\n-------\n" + summary + "\n\n" +
+      "ACTION ITEMS\n------------\n" + actions + "\n\n" +
+      "KEY DECISIONS\n-------------\n" + decisions + "\n";
+
+    const blob = new Blob([text], { type: "text/plain" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "memo_{{ memo.summary_id }}.txt";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+</script>
+{% endblock %}

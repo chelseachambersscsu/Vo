@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% set active_page = "saved" %}
+{% block title %}Saved Memos &mdash; MemoBoat{% endblock %}
+
+{% block content %}
+<main class="container my-5">
+  <h2 class="fw-bold text-primary mb-4"><i class="bi bi-archive me-2"></i>Saved Memos</h2>
+
+  {% if memos %}
+  <div class="card">
+    <div class="table-responsive">
+      <table class="table table-hover memo-table mb-0 align-middle">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Meeting Type</th>
+            <th>Date</th>
+            <th class="text-end">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for m in memos %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td class="fw-semibold">{{ m.summary[:60] }}{% if m.summary|length > 60 %}&hellip;{% endif %}</td>
+            <td><span class="badge bg-primary">{{ m.type_name }}</span></td>
+            <td>{{ m.timestamp }}</td>
+            <td class="text-end">
+              <a href="/memo/{{ m.summary_id }}" class="btn btn-sm btn-outline-primary">
+                <i class="bi bi-eye me-1"></i> View Memo
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% else %}
+  <div class="text-center py-5">
+    <i class="bi bi-inbox text-muted" style="font-size:3rem"></i>
+    <p class="text-muted mt-3 mb-0">No memos saved yet. Head to the <a href="/">Home</a> page to generate one!</p>
+  </div>
+  {% endif %}
+</main>
+{% endblock %}

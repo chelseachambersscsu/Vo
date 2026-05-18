@@ -1,0 +1,114 @@
+/* ===================================================================
+   MemoBoat — Purple & White Color Scheme
+   =================================================================== */
+
+:root {
+  --mb-purple:       #6C3FC5;
+  --mb-purple-dark:  #5230A0;
+  --mb-purple-light: #EDE5FA;
+  --mb-white:        #FFFFFF;
+  --mb-gray-50:      #F8F6FC;
+  --mb-gray-200:     #E2D9F3;
+  --mb-gray-600:     #6B6380;
+  --mb-gray-900:     #2D2640;
+}
+
+/* --- Bootstrap overrides ----------------------------------------------- */
+.bg-primary   { background-color: var(--mb-purple) !important; }
+.btn-primary  {
+  background-color: var(--mb-purple);
+  border-color: var(--mb-purple);
+}
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--mb-purple-dark);
+  border-color: var(--mb-purple-dark);
+}
+.btn-outline-primary {
+  color: var(--mb-purple);
+  border-color: var(--mb-purple);
+}
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+  background-color: var(--mb-purple);
+  border-color: var(--mb-purple);
+  color: var(--mb-white);
+}
+.text-primary { color: var(--mb-purple) !important; }
+
+a { color: var(--mb-purple); }
+a:hover { color: var(--mb-purple-dark); }
+
+/* --- Global ------------------------------------------------------------ */
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: var(--mb-gray-900);
+  background: var(--mb-gray-50);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+main { flex: 1; }
+
+/* --- Hero -------------------------------------------------------------- */
+.hero {
+  background: linear-gradient(135deg, var(--mb-purple) 0%, var(--mb-purple-dark) 100%);
+  color: var(--mb-white);
+  padding: 3.5rem 0 2.5rem;
+}
+.hero h1 { font-weight: 700; }
+.hero p  { opacity: 0.9; }
+
+/* --- Cards ------------------------------------------------------------- */
+.card {
+  border: 1px solid var(--mb-gray-200);
+  border-radius: 0.75rem;
+}
+.card-header {
+  background-color: var(--mb-purple-light);
+  border-bottom: 1px solid var(--mb-gray-200);
+  font-weight: 600;
+  color: var(--mb-purple-dark);
+}
+
+/* --- Preview panel ----------------------------------------------------- */
+#preview-panel .placeholder-text {
+  color: var(--mb-gray-600);
+  font-style: italic;
+}
+
+/* --- Memo list table --------------------------------------------------- */
+.memo-table th {
+  background-color: var(--mb-purple-light);
+  color: var(--mb-purple-dark);
+  font-weight: 600;
+}
+
+/* --- About badges ------------------------------------------------------ */
+.tech-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--mb-purple-light);
+  color: var(--mb-purple-dark);
+  border-radius: 2rem;
+  padding: 0.35rem 0.85rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+/* --- Loading spinner --------------------------------------------------- */
+.spinner-border.text-primary {
+  color: var(--mb-purple) !important;
+}
+
+/* --- Action item checkbox ---------------------------------------------- */
+.form-check-input:checked {
+  background-color: var(--mb-purple);
+  border-color: var(--mb-purple);
+}
+
+/* --- Responsive tweaks ------------------------------------------------- */
+@media (max-width: 767.98px) {
+  .hero { padding: 2.5rem 0 1.5rem; }
+}
